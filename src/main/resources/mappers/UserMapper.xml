@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yubulang.dao.UserDao">
+    <select id="queryUserByUsername" parameterType="string" resultType="com.yubulang.vo.User">
+        select id, username, password
+        from users
+        where username = #{username}
+    </select>
+
+    <select id="queryUserById" parameterType="int" resultType="com.yubulang.vo.User">
+        select *
+        from users
+        where id = #{id}
+    </select>
+
+    <insert id="save" parameterType="com.yubulang.vo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into users (id, username, password, created_at)
+        values (#{id}, #{username}, #{password}, now())
+    </insert>
+
+    <update id="update" parameterType="com.yubulang.vo.User">
+        update users
+        set username=#{username},
+            password=#{password}
+        where id = #{id}
+    </update>
+
+    <select id="selectByParams" parameterType="com.yubulang.query.UserQuery" resultType="com.yubulang.vo.User">
+        select * from users
+        <where>
+            <if test="null != username and username != ''">
+                and username like concat("%", #{username}, "%")
+            </if>
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete
+        from users
+        where id = #{id}
+    </delete>
+</mapper>

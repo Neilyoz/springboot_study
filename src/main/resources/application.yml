@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/springboot_mybatis?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password:
+  # 调试信息
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      poll-interval: 3000
+      quiet-period: 1000
+
+# mybatis 配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:/mappers/*.xml
+  type-aliases-package: com.yubulang.vo
+
+# pageHelper
+pagehelper:
+  helper-dialect: mysql
+
+# 显示 dao 执行sql语句
+logging:
+  level:
+    com:
+      yubulang:
+        dao: debug
+
+# 调试信息
